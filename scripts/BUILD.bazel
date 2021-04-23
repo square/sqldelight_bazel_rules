@@ -1,0 +1,15 @@
+load("@rules_sqldelight//scripts:jarjar.bzl", "jar_jar")
+
+java_binary(
+    name = "jarjar_runner",
+    main_class = "org.pantsbuild.jarjar.Main",
+    visibility = ["//:__subpackages__"],
+    runtime_deps = ["@maven_sqldelight_tooling//org/pantsbuild:jarjar"],
+)
+
+jar_jar(
+    name = "sqldelightc_shrunk",
+    input_jar = "//actions:sqldelightc_deploy.jar",
+    rules = "sqldelight.jarjar",
+    visibility = ["//:__subpackages__"],
+)

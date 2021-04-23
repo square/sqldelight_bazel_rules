@@ -1,5 +1,5 @@
-load("//:sqldelight.bzl", "sqldelight_codegen")
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
+load("@rules_sqldelight//:sqldelight.bzl", "sqldelight_codegen")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain", "kt_android_library")
 
 kt_android_library(
     name = "r1_4_0",
@@ -18,4 +18,11 @@ sqldelight_codegen(
     srcs = ["src/main/sqldelight/sqldelight/bazel/rules/samples/oneFourZero.sq"],
     module_name = "my_module",
     src_dir = "sqldelight",
+)
+
+define_kt_toolchain(
+    name = "kotlin_toolchain",
+    api_version = "1.4",
+    jvm_target = "1.8",  # proguard demands.
+    language_version = "1.4",
 )

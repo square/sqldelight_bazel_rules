@@ -36,7 +36,7 @@ jar_jar = rule(
         "jarjar_runner": attr.label(
             executable = True,
             cfg = "host",
-            default = Label("@rules_sqldelight//third_party:jarjar_runner"),
+            default = Label("@rules_sqldelight//scripts:jarjar_runner"),
         ),
     },
     outputs = {

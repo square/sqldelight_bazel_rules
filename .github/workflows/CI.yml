@@ -16,6 +16,9 @@ jobs:
   check-main:
     runs-on: ubuntu-latest
     steps:
+    - name: Setup Globals
+      run: |
+        echo "RELEASE_REPO=/tmp/sqldelight_release_repo" >> $GITHUB_ENV
     - uses: actions/checkout@v2
     - uses: actions/setup-java@v1
       with:
@@ -31,3 +34,14 @@ jobs:
       uses: holvonix-open/setup-bazelisk@v0.6.1
     - name: Test All
       run: bazel build //...
+    - name: Extract Rules Release Package (for testing)
+      run: |
+        bazel build //:rules_sqldelight_release
+        rm -rf ${{ env.RELEASE_REPO }}
+        mkdir -p ${{ env.RELEASE_REPO }}
+        tar -xzvf bazel-bin/rules_sqldelight_release.tgz -C ${{ env.RELEASE_REPO }}
+        ls -l ${{ env.RELEASE_REPO }}
+    - name: Test Sample
+      run: |
+        cd samples/trivial
+        bazel build --override_repository=rules_sqldelight=${{ env.RELEASE_REPO }} //...
