@@ -9,7 +9,6 @@ kt_jvm_library(
     ],
     deps = [
         "@maven_sqldelight//com/beust:jcommander",
-        "@maven_sqldelight//com/squareup:javapoet",
         "@maven_sqldelight//com/squareup/sqldelight:core",
         "@maven_sqldelight//org/antlr:antlr4-runtime",
     ],

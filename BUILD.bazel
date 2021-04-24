@@ -1,6 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
-load("@rules_sqldelight//:release.bzl", "release_archive")
-load("@rules_sqldelight//third_party:jarjar.bzl", "jar_jar")
+load("@rules_sqldelight//scripts:release.bzl", "release_archive")
 
 # dev alias
 #alias(
@@ -13,22 +12,16 @@ java_binary(
     name = "sqldelightc",
     main_class = "com.squareup.tools.sqldelight.cli.MainKt",
     visibility = ["//:__subpackages__"],
-    runtime_deps = [":sqldelightc_shrunk"],
-)
-
-jar_jar(
-    name = "sqldelightc_shrunk",
-    input_jar = "//actions:sqldelightc_deploy.jar",
-    rules = "sqldelight.jarjar",
+    runtime_deps = ["@rules_sqldelight//scripts:sqldelightc_shrunk"],
 )
 
 release_archive(
     name = "rules_sqldelight_release",
-    srcs = ["sqldelight.bzl"],
     src_map = {
+        "sqldelight.bzl": "sqldelight.bzl",
         "BUILD.release.bazel": "BUILD.bazel",
         "WORKSPACE.release.bazel": "WORKSPACE",
-        ":sqldelightc_shrunk": "sqldelight_compiler.jar",
+        "//scripts:sqldelightc_shrunk": "sqldelight_compiler.jar",
     },
 )
 
