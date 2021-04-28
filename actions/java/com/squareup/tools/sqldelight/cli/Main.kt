@@ -15,7 +15,11 @@ fun main(args: Array<String>) {
     .also { it.parse(*args) }
     .validate()
   val tmpOut = Files.createTempDirectory("sqldelight")
-  val files = CompilerWrapper(Args.packageName!!, tmpOut.toFile(), Args.moduleName!!)
+  val files = CompilerWrapper(
+          Args.packageName!!,
+          tmpOut.toFile(),
+          Args.moduleName!!,
+          Args.databaseName ?: "Database")
     .generate(Args.srcDirs)
 
   val srcJar = Args.srcJar.toPath()

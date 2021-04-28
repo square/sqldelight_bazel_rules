@@ -10,6 +10,7 @@ def _sqldelight_codegen_impl(ctx):
         fail("Non-legacy SQLDelightc requires both module_name and package_name set.")
     args.add("--module_name", ctx.attr.module_name)
     args.add("--package_name", ctx.attr.package_name)
+    args.add("--database_name", ctx.attr.database_name)
     args.add_all(ctx.files.srcs)
     src_roots = {}
     for f in ctx.files.srcs:
@@ -43,6 +44,7 @@ sqldelight_codegen = rule(
         ),
         "module_name": attr.string(),
         "package_name": attr.string(),
+        "database_name": attr.string(),
     },
     output_to_genfiles = True,
     outputs = {

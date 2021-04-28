@@ -40,6 +40,13 @@ object Args : Validating {
   )
   var moduleName: String? = null
 
+  @Parameter(
+          names = ["--database_name"],
+          required = false,
+          description = "Database Name for Kotlin compilation (not required for legacy). Default as `Database`."
+  )
+  var databaseName: String? = null
+
   override fun validate(context: JCommander): Int? {
     if (context.objects.size != 1) throw AssertionError("Processed wrong number of Args classes.")
 
