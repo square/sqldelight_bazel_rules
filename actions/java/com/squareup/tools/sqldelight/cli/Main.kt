@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
           Args.packageName!!,
           tmpOut.toFile(),
           Args.moduleName!!,
-          Args.databaseName ?: "Database")
+          Args.databaseName)
     .generate(Args.srcDirs)
 
   val srcJar = Args.srcJar.toPath()
