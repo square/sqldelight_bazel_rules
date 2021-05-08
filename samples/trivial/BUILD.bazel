@@ -16,7 +16,6 @@ sqldelight_codegen(
     name = "r1_4_0_sqldelight",
     package_name = "sqldelight.bazel.samples.r1_4_0",
     srcs = ["src/main/sqldelight/sqldelight/bazel/rules/samples/oneFourZero.sq"],
-    module_name = "my_module",
     src_dir = "sqldelight",
 )
 
