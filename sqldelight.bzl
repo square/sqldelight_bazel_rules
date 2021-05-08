@@ -71,7 +71,10 @@ def _sqldelight_codegen_impl(ctx):
         arguments = [args],
     )
     return struct(
-        providers = [DefaultInfo(files = depset([srcjar]))],
+        providers = [
+            DefaultInfo(files = depset([srcjar])),
+            SqlDelightInfo(module_name = module_name),
+        ],
     )
 
 sqldelight_codegen = rule(
@@ -94,5 +97,12 @@ sqldelight_codegen = rule(
     output_to_genfiles = True,
     outputs = {
         "srcjar": "%{name}_sqldelight.srcjar",
+    },
+)
+
+SqlDelightInfo = provider(
+    "Metadata about SqlDelight codegen job - typically used by tests",
+    fields = {
+        "module_name": "Module name passed to --module_name of sqldelightc, usually generated",
     },
 )
