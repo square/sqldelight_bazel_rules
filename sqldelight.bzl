@@ -6,11 +6,13 @@ def _sqldelight_codegen_impl(ctx):
     args = ctx.actions.args()
     args.add("-o", srcjar)
 
-    if not ctx.attr.module_name or not ctx.attr.package_name:
-        fail("Non-legacy SQLDelightc requires both module_name and package_name set.")
-    args.add("--module_name", ctx.attr.module_name)
+    if not ctx.attr.package_name:
+        fail("SQLDelightc requires package_name to set.")
     args.add("--package_name", ctx.attr.package_name)
-    args.add("--database_name", ctx.attr.database_name)
+    module_name = _prepare_module_name(ctx)
+    args.add("--module_name", "\"%s\"" % module_name)
+    if ctx.attr.database_name:
+        args.add("--database_name", ctx.attr.database_name)
     args.add_all(ctx.files.srcs)
     src_roots = {}
     for f in ctx.files.srcs:
