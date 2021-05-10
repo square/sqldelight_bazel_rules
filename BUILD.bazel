@@ -1,5 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
 load("@rules_sqldelight//scripts:release.bzl", "release_archive")
+load("//:tests/test_suite.bzl", "sqldelight_test_suite")
 
 # dev alias
 #alias(
@@ -31,3 +32,5 @@ define_kt_toolchain(
     jvm_target = "1.8",  # proguard demands.
     language_version = "1.4",
 )
+
+sqldelight_test_suite(name = "sqldelight_tests")
