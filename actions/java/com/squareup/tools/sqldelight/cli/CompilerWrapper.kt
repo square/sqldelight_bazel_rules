@@ -12,7 +12,7 @@ class CompilerWrapper(
   packageName: String,
   private val outputDirectory: File,
   private val moduleName: String,
-  private val databaseName: String
+  databaseName: String
 ) {
   private val logger = Logger.getLogger(CompilerWrapper::class.java.name)
   private val defaultProperties = SqlDelightDatabaseProperties(

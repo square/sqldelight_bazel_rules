@@ -1,70 +1,34 @@
 package com.squareup.tools.sqldelight.cli
 
-import com.beust.jcommander.JCommander
-import com.beust.jcommander.Parameter
+import com.xenomachina.argparser.ArgParser
+import com.xenomachina.argparser.default
 import java.io.File
 
-/** Holds the CLI flags */
-object Args : Validating {
-  @Parameter(names = ["--help"], help = true)
-  var help = false
+class Args(parser: ArgParser) {
+  val srcJar by parser.storing(
+    "--output_srcjar", "-o",
+    help = "Srcjar of generated code."
+  ) { File(this) }
 
-  @Parameter(
-    names = ["--output_srcjar", "-o"],
-    description = "Srcjar of generated code.",
-    required = true
+  val srcDirs by parser.adding(
+    "--src_dir",
+    help = "Directories containing all srcs"
+  ) { File(this) }
+
+  val packageName by parser.storing(
+    "--package_name",
+    help = "Package into which the code will be generated"
   )
-  lateinit var srcJar: File
 
-  @Parameter(description = "<list of SQL files to process>")
-  lateinit var fileNames: List<String>
-
-  @Parameter(
-    names = ["--src_dirs"],
-    description = "Directories containing all srcs",
-    required = true
+  val moduleName by parser.storing(
+    "--module_name",
+    help = "Module Name for Kotlin compilation (not required for legacy)"
   )
-  lateinit var srcDirs: List<File>
 
-  @Parameter(
-    names = ["--package_name"],
-    required = false,
-    description = "Package into which the code will be generated (not required for legacy)"
-  )
-  var packageName: String? = null
+  val databaseName by parser.storing(
+    "--database_name",
+    help = "Database Name for Kotlin compilation (not required for legacy). Default as `Database`."
+  ).default("Database")
 
-  @Parameter(
-    names = ["--module_name"],
-    required = false,
-    description = "Module Name for Kotlin compilation (not required for legacy)"
-  )
-  var moduleName: String? = null
-
-  @Parameter(
-          names = ["--database_name"],
-          required = false,
-          description = "Database Name for Kotlin compilation (not required for legacy). Default as `Database`."
-  )
-  var databaseName: String = "Database"
-
-  override fun validate(context: JCommander): Int? {
-    if (context.objects.size != 1) throw AssertionError("Processed wrong number of Args classes.")
-
-    if (moduleName == null || packageName == null) {
-      context.usage()
-    }
-
-    if (help) {
-      context.usage()
-      return 0 // valid run, but should terminate early.
-    }
-
-    if (fileNames.isEmpty()) {
-      println("Must set at least one file.")
-      context.usage()
-      return 1
-    }
-
-    return null
-  }
+  val fileNames by parser.positionalList(help = "<list of SQL files to process>")
 }

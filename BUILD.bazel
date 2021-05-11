@@ -2,13 +2,6 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
 load("@rules_sqldelight//scripts:release.bzl", "release_archive")
 load("//:tests/test_suite.bzl", "sqldelight_test_suite")
 
-# dev alias
-#alias(
-#    name = "sqldelightc",
-#    actual = "//actions:sqldelightc",
-#    visibility = ["//visibility:public"],
-#)
-
 java_binary(
     name = "sqldelightc",
     main_class = "com.squareup.tools.sqldelight.cli.MainKt",

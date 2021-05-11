@@ -44,7 +44,6 @@ def _sqldelight_codegen_impl(ctx):
     args.add("--module_name", "\"%s\"" % module_name)
     if ctx.attr.database_name:
         args.add("--database_name", ctx.attr.database_name)
-    args.add_all(ctx.files.srcs)
     src_roots = {}
     if not len(ctx.files.srcs):
         fail("No sources found. Must specify one or more .sq files to process.")
@@ -62,7 +61,9 @@ def _sqldelight_codegen_impl(ctx):
             "Srcs: %s\nSource Separation Dir: %s" %
             (ctx.files.srcs, ctx.attr.src_dir),
         )
-    args.add_joined("--src_dirs", src_roots.keys(), join_with = ",")
+    for root in src_roots:
+        args.add("--src_dir", root)
+    args.add_all(ctx.files.srcs)
 
     ctx.actions.run(
         executable = ctx.executable._sqldelight_compiler,

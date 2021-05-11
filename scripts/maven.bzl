@@ -23,6 +23,8 @@ def register_action_deps():
     maven_repository_specification(
         name = "maven_sqldelight",
         artifacts = {
+            "com.xenomachina:kotlin-argparser:2.0.7": {"insecure": True},
+            "com.xenomachina:xenocom:0.0.7": {"insecure": True},
             "com.beust:jcommander:1.78": {"insecure": True},
             "com.squareup.sqldelight:core:%s" % SQLDELIGHT_VERSION: {"insecure": True},
             "org.antlr:antlr4-runtime:4.5.3": {"insecure": True},
