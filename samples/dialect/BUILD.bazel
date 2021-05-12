@@ -1,0 +1,25 @@
+load("@rules_sqldelight//:sqldelight.bzl", "sqldelight_codegen")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain", "kt_jvm_library")
+
+kt_jvm_library(
+    name = "library",
+    srcs = glob(["src/main/java/**/*.java"]) + [":generated_sources"],
+    deps = [
+        "@maven//com/squareup/sqldelight:jdbc-driver",
+    ],
+)
+
+sqldelight_codegen(
+    name = "generated_sources",
+    package_name = "sqldelight.bazel.rules.samples",
+    srcs = ["src/main/sqldelight/sqldelight/bazel/rules/samples/oneFourZero.sq"],
+    database_dialect = "MYSQL",
+    src_dir = "src/main/sqldelight",
+)
+
+define_kt_toolchain(
+    name = "kotlin_toolchain",
+    api_version = "1.4",
+    jvm_target = "1.8",  # proguard demands.
+    language_version = "1.4",
+)

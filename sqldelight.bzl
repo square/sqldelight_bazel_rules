@@ -44,6 +44,8 @@ def _sqldelight_codegen_impl(ctx):
     args.add("--module_name", "\"%s\"" % module_name)
     if ctx.attr.database_name:
         args.add("--database_name", ctx.attr.database_name)
+    if ctx.attr.database_dialect:
+        args.add("--database_dialect", ctx.attr.database_dialect)
     src_roots = {}
     if not len(ctx.files.srcs):
         fail("No sources found. Must specify one or more .sq files to process.")
@@ -94,6 +96,7 @@ sqldelight_codegen = rule(
         "module_name": attr.string(),
         "package_name": attr.string(),
         "database_name": attr.string(),
+        "database_dialect": attr.string(),
     },
     output_to_genfiles = True,
     outputs = {

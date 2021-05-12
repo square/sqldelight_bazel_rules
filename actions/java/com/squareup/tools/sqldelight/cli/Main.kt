@@ -9,13 +9,19 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 fun main(rawArgs: Array<String>) = mainBody {
+  realMain(rawArgs)
+}
+
+/** Extracted to allow testing without xenomachina [mainBody] auto-handling errors */
+internal fun realMain(rawArgs: Array<String>) {
   val args = ArgParser(rawArgs).parseInto(::Args)
   val tmpOut = Files.createTempDirectory("sqldelight")
   val files = CompilerWrapper(
           args.packageName,
           tmpOut.toFile(),
           args.moduleName,
-          args.databaseName)
+          args.databaseName,
+          args.dialect)
     .generate(args.srcDirs)
 
   val srcJar = args.srcJar.toPath()

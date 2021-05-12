@@ -43,7 +43,7 @@ class Args(parser: ArgParser) {
       DialectPreset.valueOf(this.toUpperCase(Locale.ROOT))
     } catch (e: IllegalArgumentException) {
       throw SystemExitException(
-        "Invalid dialect. Should be one of: ${DialectPreset.values().joinToString(", ")}",
+        "Invalid dialect \"$this\". Should be one of: ${DialectPreset.values().joinToString(", ")}",
         2
       )
     }
