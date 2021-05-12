@@ -32,10 +32,10 @@ jobs:
         key: caches-${{ runner.os }}
     - name: Setup bazelisk for Bazel builds
       uses: holvonix-open/setup-bazelisk@v0.6.1
-    - name: Build All
-      run: bazel build //...
-    - name: Test All
-      run: bazel test //...
+    - name: Build Wrapper
+      run: bazel build //actions/...
+    - name: Test Wrapper and Rules
+      run: bazel test //actions/... //:sqldelight_tests
     - name: Extract Rules Release Package (for testing)
       run: |
         bazel build //:rules_sqldelight_release
