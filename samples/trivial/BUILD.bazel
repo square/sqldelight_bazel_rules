@@ -2,8 +2,8 @@ load("@rules_sqldelight//:sqldelight.bzl", "sqldelight_codegen")
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain", "kt_android_library")
 
 kt_android_library(
-    name = "r1_4_0",
-    srcs = glob(["src/main/java/**/*.java"]) + [":r1_4_0_sqldelight"],
+    name = "library",
+    srcs = glob(["src/main/java/**/*.java"]) + [":generated_sources"],
     deps = [
         "@maven_sqldelight//androidx/sqlite",
         "@maven_sqldelight//androidx/sqlite:sqlite-ktx",
@@ -13,10 +13,10 @@ kt_android_library(
 )
 
 sqldelight_codegen(
-    name = "r1_4_0_sqldelight",
-    package_name = "sqldelight.bazel.samples.r1_4_0",
+    name = "generated_sources",
+    package_name = "sqldelight.bazel.rules.samples",
     srcs = ["src/main/sqldelight/sqldelight/bazel/rules/samples/oneFourZero.sq"],
-    src_dir = "sqldelight",
+    src_dir = "src/main/sqldelight",
 )
 
 define_kt_toolchain(
