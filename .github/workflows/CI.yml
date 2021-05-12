@@ -43,7 +43,13 @@ jobs:
         mkdir -p ${{ env.RELEASE_REPO }}
         tar -xzvf bazel-bin/rules_sqldelight_release.tgz -C ${{ env.RELEASE_REPO }}
         ls -l ${{ env.RELEASE_REPO }}
-    - name: Test Sample
+    - name: "Test Sample: Trivial"
       run: |
-        cd samples/trivial
+        pushd samples/trivial
         bazel build --override_repository=rules_sqldelight=${{ env.RELEASE_REPO }} //...
+        popd
+    - name: "Test Sample: Dialect"
+      run: |
+        pushd samples/dialect
+        bazel build --override_repository=rules_sqldelight=${{ env.RELEASE_REPO }} //...
+        popd
