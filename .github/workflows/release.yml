@@ -23,9 +23,10 @@ jobs:
         uses: holvonix-open/setup-bazelisk@v0.6.1
       - name: Create release artifact
         run: bazel build //:rules_sqldelight_release
-      - name: Upload the release artifact
-        uses: skx/github-action-publish-binaries@release-1.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release artifact
+        uses: svenstaro/upload-release-action@2.2.1
         with:
-          args: 'bazel-bin/rules_sqldelight_release.tgz'
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: bazel-bin/rules_sqldelight_release.tgz
+          tag: ${{ github.ref }}
+          overwrite: true
