@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 def release_archive(name, srcs = None, src_map = {}, package_dir = None, extension = "tgz", deps = None):
