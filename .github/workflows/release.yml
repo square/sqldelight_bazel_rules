@@ -5,7 +5,6 @@ on:
 jobs:
   generate:
     name: Create release-artifacts
-    needs: [check-main]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
