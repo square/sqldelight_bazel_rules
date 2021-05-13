@@ -1,5 +1,6 @@
 package com.squareup.tools.sqldelight.cli
 
+import com.alecstrong.sql.psi.core.DialectPreset
 import com.squareup.sqldelight.core.SqlDelightDatabaseProperties
 import com.squareup.sqldelight.core.SqlDelightEnvironment
 import java.io.File
@@ -12,7 +13,8 @@ class CompilerWrapper(
   packageName: String,
   private val outputDirectory: File,
   private val moduleName: String,
-  databaseName: String
+  databaseName: String,
+  databaseDialect: DialectPreset
 ) {
   private val logger = Logger.getLogger(CompilerWrapper::class.java.name)
   private val defaultProperties = SqlDelightDatabaseProperties(
@@ -20,6 +22,7 @@ class CompilerWrapper(
     compilationUnits = emptyList(),
     outputDirectory = outputDirectory.toString(),
     className = databaseName,
+    dialectPreset = databaseDialect,
     dependencies = emptyList()
   )
 

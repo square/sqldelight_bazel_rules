@@ -25,9 +25,9 @@ def register_action_deps():
         artifacts = {
             "com.xenomachina:kotlin-argparser:2.0.7": {"insecure": True},
             "com.xenomachina:xenocom:0.0.7": {"insecure": True},
-            "com.beust:jcommander:1.78": {"insecure": True},
             "com.squareup.sqldelight:core:%s" % SQLDELIGHT_VERSION: {"insecure": True},
             "org.antlr:antlr4-runtime:4.5.3": {"insecure": True},
+            "junit:junit:4.13": {"insecure": True, "testonly": True, "exclude": ["org.hamcrest:hamcrest-core"]},
 
             # Transitive
             "androidx.annotation:annotation:1.1.0": {"insecure": True},
