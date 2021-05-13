@@ -50,7 +50,7 @@ kt_jvm_library(
     name = "lib",
     srcs = glob(["src/main/java/**/*.java"]) + [":gen"],
     deps = [
-        "@maven//com_squareup_sqldelight_jdbc_driver",
+        "@maven//com_squareup_sqldelight_jdbc-driver",
     ],
 )
 
